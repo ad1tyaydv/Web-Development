@@ -1,3 +1,5 @@
+<!-- Adding the new Todo items below!!-->
+
 <html>
 
     <body>
@@ -25,4 +27,39 @@
             ctr = ctr + 1;
         }
     </script>
+</html>
+
+
+
+
+<!-- Adding the Todo List items above !!-->
+
+<html>
+
+<body>
+    <div id="todoContainer"></div>
+    <input type="text"></input>
+    <button  onclick="AddTodo()">Add todo!</button>
+</body>
+
+<script>
+    let ctr = 1;
+
+    function DeleteTodo(index) {
+        const element = document.getElementById("todo-" + index);
+        element.parentNode.removeChild(element);
+    }
+
+    function AddTodo() {
+        const inputEl = document.querySelector("input");
+        const value = inputEl.value;
+
+        const newDivEl = document.createElement("div");
+        newDivEl.setAttribute("id", "todo-" + ctr); 
+        newDivEl.innerHTML = "<div>" + value + '</div><button onclick="DeleteTodo(' + ctr + ')">Delete</button>';
+
+        document.querySelector("#todoContainer").appendChild(newDivEl);
+        ctr = ctr + 1;
+    }
+</script>
 </html>
