@@ -89,3 +89,114 @@
         }
     </script>
 </html>
+
+
+
+
+// PROJECT - Creating a todo list from scratch
+
+<html>
+    <body>
+        <input type="text"></input>
+        <button onclick="addTodo()">Add Todo!</button>
+    </body>
+
+    <script>
+
+        function deleteTodo() {
+            console.log("delete called");
+        }
+
+        function addTodo() {
+            const inputEl = document.querySelector("input");
+            const value = inputEl.value;
+
+            const newDivEl = document.createElement("div");
+            newDivEl.innerHTML = "<div>" + value + "</div><button onclick='delete()'>delete</button>";
+
+            document.querySelector("body").appendChild(newDivEl)
+        }
+    </script>
+</html>
+
+
+
+
+// Cleaner way to create a TODO list without using raw HTML
+
+<body>
+    <input type="text"></input>
+    <button onclick="AddTodo()">Add Todo</button>
+
+    <script>
+        function AddTodo() {
+           const value = document.querySelector("input").value;
+           const spanEl = document.createElement("span");
+           const buttonEl = document.createElement("button");
+           spanEl.innerHTML = value;
+           buttonEl.innerHTML = "Delete";
+
+           ///
+           const divEl = document.createElement("div");
+           divEl.appendChild(spanEl);
+           divEl.appendChild(buttonEl);
+           ///
+
+           document.querySelector("body").appendChild(divEl);
+        }
+    </script>
+</body>
+
+
+
+
+// Creating a Todo list using STATE and COMPONENTS
+
+<body>
+    <input type="text"></input>
+    <button onclick="AddTodo()">Add Todo</button>
+    <button onclick="DeleteFirstTodo()">Delete First Todo</button>
+    <button onclick="DeleteLastTodo()">Delete Last Todo</button>
+
+    <div id="todos"></div>
+    <script>
+        let todos = [];
+        function AddTodo() {
+            todos.push({
+                title: document.querySelector("input").value
+            })
+            render()
+        }
+
+        function DeleteFirstTodo() {
+            todos.splice(0, 1)    // Remove the first element form the array
+            render();
+        }
+
+        function DeleteLastTodo() {
+            todos.splice(todos.length - 1, 1)    // Remopve the last element form the array
+            render()
+        }
+
+
+        // DOM Manipulation is happening here
+        function createTodoComponent(todo) {
+            const div = document.createElement("div");
+            const h1 = document.createElement("h1");
+            const button = document.createElement("button");
+            button.innerHTML = "Delete";
+            h1.innerHTML = todo.title;
+            div.append(h1)
+            div.append(button)
+            return div
+        }
+        
+        function render() {
+            document.querySelector("#todos").innerHTML = "";
+            for(let i=0;i<todos.length;i++) {
+                const element = createTodoComponent(todos[i]);
+                document.querySelector("#todos").appendChild(element);
+            }
+        }
+    </script>
+</body>
