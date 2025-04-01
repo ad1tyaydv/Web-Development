@@ -174,27 +174,32 @@
         }
 
         function DeleteLastTodo() {
-            todos.splice(todos.length - 1, 1)    // Remopve the last element form the array
+            todos.pop()    // Remopve the last element form the array
             render()
         }
 
+        function DeleteTodoAt(index) {
+            todos.splice(index, 1);
+            render();
+        }
 
         // DOM Manipulation is happening here
-        function createTodoComponent(todo) {
+        function createTodoComponent(todos, index) {
             const div = document.createElement("div");
             const h1 = document.createElement("h1");
             const button = document.createElement("button");
             button.innerHTML = "Delete";
-            h1.innerHTML = todo.title;
-            div.append(h1)
-            div.append(button)
-            return div
+            button.setAttribute("onclick", "DeleteTodoAt(" + index + ")");
+            h1.innerHTML = todos.title;
+            div.append(h1);
+            div.append(button);
+            return div;
         }
         
         function render() {
             document.querySelector("#todos").innerHTML = "";
             for(let i=0;i<todos.length;i++) {
-                const element = createTodoComponent(todos[i]);
+                const element = createTodoComponent(todos[i], i);
                 document.querySelector("#todos").appendChild(element);
             }
         }
