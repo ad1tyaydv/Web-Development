@@ -1,6 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "adityacoding";
+const JWT_SECRET = "adityaiscoding";
 const app = express();
 app.use(express.json());
 
@@ -45,7 +45,7 @@ app.post("/signin" ,logger, function(req, res) {
 
     if(foundUser) {
         const token = jwt.sign({
-            username
+            username: users[i].username
         }, JWT_SECRET);
         res.json({
             token: token
