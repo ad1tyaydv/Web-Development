@@ -1,92 +1,71 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
-const JWT_SECRET = "adityaiscoding";
 const app = express();
 app.use(express.json());
 
 const users = [];
 
-function logger(req, res, next) {
-    console.log(req.method + " request came");
-    next();
+function generate() {
+    const options = "1234567890";
+    
+    let reg_no = "";
+
+    for(let i=0;i<10;i++) {
+        reg_no += options[Math.floor(Math.random() * options.length)];
+    }
+
+    return reg_no;
 }
 
-// localhost:3000
-app.get("/", function(req, res) {
-    res.sendFile(__dirname + "/public/index.html");  // __dirname stores the current directory
-});
+app.post("/student", function(req, res) {
+    const student  = req.body.student;
+    const father = req.body.father;
+    const mother = req.body.mother;
+    const phone = req.body.phone;
 
-app.post("/signup" ,logger, function(req,res) {
-    const username = req.body.username;
-    const password = req.body.password;
+    const reg_no = generate();
 
     users.push({
-        username: username,
-        password: password
+        student: student,
+        father: father,
+        mother: mother,
+        phone: phone,
+        reg_no: reg_no
     })
 
-
-    // we should check if a user with this username already exists
     res.json({
-        message: "You are signed in"
+        message: "Registration Successfull",
+        reg_no: reg_no
     })
+
+    console.log(users);
 })
 
-app.post("/signin" ,logger, function(req, res) {
-    const username = req.body.username;
-    const password = req.body.password;
+app.get("/me", function(req, res) {
+    const reg_no = req.headers.reg_no;
 
     let foundUser = null;
+    
     for(let i=0;i<users.length;i++) {
-        if(users[i].username == username && users[i].password == password) {
+        if(users[i].reg_no == reg_no) {
             foundUser = users[i];
-        }        
+        }
     }
 
     if(foundUser) {
-        const token = jwt.sign({
-            username: foundUser.username
-        }, JWT_SECRET);
         res.json({
-            token: token
+            student: foundUser.student,
+            father: foundUser.father,
+            mother: foundUser.mother,
+            phone: foundUser.phone
         })
     }
     else {
         res.json({
-            message: "Invalid username and password"
+            message: "Invalid registration number"
         })
     }
 })
 
-function auth(req, res, next) {
-    const token = req.headers.token;
-    const decodedData = jwt.verify(token, JWT_SECRET);
-    
-    if(decodedData.username) {
-        req.username = decodedData.username
-        next();
-    }
-    else {
-        res.json({
-            message: "You are not logged in"
-        })
-    }
-}
-
-app.get("/me" ,logger, auth ,function(req, res) {
-
-        let foundUser = null;
-
-        for(let i=0;i<users.length;i++) {
-            if(users[i].username === req.username) {
-                foundUser = users[i];
-            }
-        }
-
-        res.json({
-            username: foundUser.username,
-            password: foundUser.password
-        })
-    })
-
-app.listen(3000);
+app.listen(3000, function() {
+    console.log("Running on port 3000");
+})
