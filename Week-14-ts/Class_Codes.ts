@@ -26,7 +26,7 @@ isLegal({
 
 -----------------------------------------------------------------------------------------------------------
 
-    interface Person {
+   interface Person {
     firstName: String;
     lastName: String;
     age: number;
@@ -35,18 +35,20 @@ isLegal({
 
 
 class Employee implements Person {
-    name: String;
+    firstName: String;
+    lastName: String;
     age: number;
 
     constructor(n: String, a: number) {
-        this.name = n;
+        this.firstName = n;
+        this.lastName = ""
         this.age = a;
     }
 
     greet(pharse: String) {
-        console.log(`${pharse} ${this.name}`);
+        console.log(`${pharse} ${this.firstName}`);
     }
 }
 
 const e = new Employee("Aditya", 22);
-console.log(e.name);
+console.log(e.firstName);
