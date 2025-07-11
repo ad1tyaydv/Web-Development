@@ -3,7 +3,7 @@ interface User {
     lastName: String;
     age: number;
     email?: String;
-};
+}
 
 function isLegal(user: User) {
     if(user.age > 18) {
