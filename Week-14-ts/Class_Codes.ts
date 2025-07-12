@@ -65,3 +65,30 @@ function greet(id: (number | string)) {
 
 greet(1);
 greet("1");
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+
+// What is the Difference between interface and a type
+type Employee = {
+    name: String;
+    startDate: Date;
+};
+
+type Manager = {
+    name: String;
+    Department: string;
+};
+
+type TechLead = Employee & Manager;
+type TechLead = {
+    name: String;
+    department: string;
+    startDate: Date;
+}
+const t: TechLead = {
+    name: "Aditya",
+    startDate: new Date();
+    department: "SDE-2"
+}
