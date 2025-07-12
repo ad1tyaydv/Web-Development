@@ -52,3 +52,16 @@ class Employee implements Person {
 
 const e = new Employee("Aditya", 22);
 console.log(e.firstName);
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+type greetArg = number | string | boolean;
+
+function greet(id: (number | string)) {
+
+}
+
+greet(1);
+greet("1");
