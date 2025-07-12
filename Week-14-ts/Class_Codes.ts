@@ -92,3 +92,22 @@ const t: TechLead = {
     startDate: new Date();
     department: "SDE-2"
 }
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+type numberArr = number[];
+
+function MaxValue(arr: numberArr) {
+    let max = 0;
+    for(let i=0;i<arr.length;i++) {
+        if(arr[i] > max) {
+            max = arr[i];
+        }
+    }
+
+    return max;
+}
+
+MaxValue([1, 2, 3])
