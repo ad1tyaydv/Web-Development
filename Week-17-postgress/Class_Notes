@@ -1,0 +1,13 @@
+// Connect to postgress
+
+import { Client } from "pg";
+
+const pgClient = new Client("")
+
+async function main() {
+    await pgClient.connect();
+    const response = await(pgClient.query("UPDATE users SET username='adityadevdotcom' WHERE id=4"))
+    console.log(response.rows);
+}
+
+main();
