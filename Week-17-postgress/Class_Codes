@@ -297,3 +297,35 @@ app.get("/better-metadata", async (req, res) => {
                         response: response.rows
                    })
 })
+
+
+
+/*
+WORKFLOW EXPLANATION:
+
+1. Server Setup
+   - Import necessary libraries (pg for PostgreSQL and express for building a server).
+   - Initialize an Express application and set up middleware to parse JSON request bodies.
+   - Connect to a PostgreSQL database using the provided connection string.
+
+2. User Signup Endpoint (/signup)
+   - Receives user details (username, email, password, and address fields) via a POST request.
+   - Inserts user data (username, email, password) into the users table and retrieves the generated user ID.
+   - Inserts address data (city, country, street, pincode) into the addresses table, associating it with the retrieved user ID.
+   - Sends a success message to the client if all operations complete successfully.
+   - Handles errors and sends an error message if any database operation fails.
+
+3. Metadata Retrieval Endpoint (/meta-data)
+   - Accepts a user ID via query parameters in a GET request.
+   - Fetches user details (username, email) and associated address details (city, country, street, pincode) using a SQL JOIN query.
+   - Sends the retrieved data as a JSON response to the client.
+   - Handles errors and sends an error message if metadata retrieval fails.
+
+4. Error Handling
+   - Catches database errors during both user signup and metadata retrieval.
+   - Logs errors for debugging and provides appropriate responses to the client.
+
+5. Server Start
+   - Starts the Express server on port 3000.
+   - Logs a message indicating the server is running and provides the base URL for testing.
+*/
