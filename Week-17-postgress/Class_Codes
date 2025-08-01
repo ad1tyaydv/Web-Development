@@ -270,3 +270,12 @@ app.get("/metadata", async (req, res) => {
 })
 
 app.listen(3000);
+
+
+
+
+// Instead of sending query1 then query2 we can use JOIN 
+
+SELECT users.id, users.username, users.email, address.city, address.country, address.street, address.pincode 
+FROM users JOIN address ON users.id = address.user_id
+WHERE users.id = '16';
