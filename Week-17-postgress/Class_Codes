@@ -279,3 +279,21 @@ app.listen(3000);
 SELECT users.id, users.username, users.email, address.city, address.country, address.street, address.pincode 
 FROM users JOIN address ON users.id = address.user_id
 WHERE users.id = '16';
+
+
+// JOINS are good... They let you avoid a database call and seize data in a structured fashion rather then decompose it in different like
+// response but they are expensive
+
+app.get("/better-metadata", async (req, res) => {
+    const id = req.query.id;
+
+    const query = `SELECT users.id, users.username, users.email, address.city, address.country, address.street, address.pincode 
+                   FROM users JOIN address ON users.id = address.user_id
+                   WHERE users.id = $1;`
+                   
+                   const response = await pgClient.query(query, [id]);
+
+                   res.json({
+                        response: response.rows
+                   })
+})
